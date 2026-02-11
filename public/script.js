@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // 1. КОНСТАНТЫ И ИНИЦИАЛИЗАЦИЯ
     const workoutForm = document.getElementById('addWorkoutForm');
     const workoutsList = document.getElementById('workoutsList');
     const noWorkoutsMessage = document.getElementById('noWorkoutsMessage');
@@ -11,20 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contactForm');
     const quoteElement = document.getElementById('quotePlaceholder'); 
 
-    // Элементы статистики на progress.html
     const totalWorkoutsEl = document.getElementById('totalWorkouts');
     const totalDurationEl = document.getElementById('totalDuration');
     const avgCaloriesEl = document.getElementById('avgCalories');
 
 
-    // 2. ЛОГИКА ТРЕНИРОВОК (Журнал)
-    // NOTE: Workout functionality is now handled by workouts-api.js which connects to MongoDB
-    // This section is commented out to avoid conflicts with the API-based implementation
-    
-    // Workout operations are now handled in workouts-api.js which uses MongoDB via Express API
-    
-    // 3. ЛОГИКА ПИТАНИЯ (Журнал) — локальное хранение используется только
-    // для старого варианта, но оставляем код на случай, если он вам нужен.
     
     function loadNutrition() {
         if (!nutritionLog) return;
@@ -53,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Обработчик отправки формы питания (локальный вариант, если нужен)
     if (nutritionForm && !document.body.classList.contains('api-nutrition')) {
         loadNutrition(); 
 
@@ -98,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Обработчик удаления приема пищи (локальный вариант)
     if (nutritionLog) {
         nutritionLog.addEventListener('click', function(e) {
             if (e.target.classList.contains('delete-btn-meal')) {   
@@ -115,7 +103,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    // 4. ЛОГИКА ДЛЯ КОНТАКТНОЙ ФОРМЫ (О Нас)
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -124,7 +111,6 @@ document.addEventListener('DOMContentLoaded', function() {
             contactForm.reset();
             if (messageAlert) {
                 messageAlert.style.display = 'block';
-                // setTimeout - просто выполняет код через указанное время
                 setTimeout(function() {
                     messageAlert.style.display = 'none';
                 }, 3000);
@@ -132,7 +118,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // 5. ЛОГИКА ПРОГРЕССА (progress.html)
 
     async function updateProgressStats() {
         // Get API base URL
@@ -176,26 +161,21 @@ document.addEventListener('DOMContentLoaded', function() {
         let totalDuration = 0;
         let totalCalories = 0;
 
-        // Расчет общей продолжительности
         for (let i = 0; i < workouts.length; i++) {
             totalDuration = totalDuration + workouts[i].duration; // sum = sum + w.duration
         }
 
-        // Расчет общей калорийности
         for (let i = 0; i < meals.length; i++) {
             totalCalories = totalCalories + meals[i].calories; // sum = sum + m.calories
         }
 
-        // Общее количество тренировок - это просто длина массива
         const totalWorkouts = workouts.length;
         
-        // Расчет средней калорийности (простое деление)
         let avgCalories = 0;
-        if (meals.length > 0) { // Проверяем, что не делим на ноль
+        if (meals.length > 0) { 
             avgCalories = Math.round(totalCalories / meals.length);
         }
         
-        // Обновление карточек
         if (totalWorkoutsEl) {
             totalWorkoutsEl.textContent = totalWorkouts;
         }
@@ -207,13 +187,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Запускаем расчет статистики при загрузке страницы Прогресс
     if (totalWorkoutsEl) { 
         updateProgressStats();
     }
 
 
-    // 6. ЛОГИКА API (Мотивационная Цитата)
     if (quoteElement) {
         fetch('https://api.quotable.io/random')
             .then(response => {

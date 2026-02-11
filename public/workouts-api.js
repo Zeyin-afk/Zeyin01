@@ -1,12 +1,9 @@
-// workouts-api.js
-
 document.addEventListener('DOMContentLoaded', function() {
 
     const workoutsList = document.getElementById('workoutsList');
     const workoutForm = document.getElementById('addWorkoutForm');
     const noWorkoutsMessage = document.getElementById('noWorkoutsMessage');
 
-    // Detect API base URL (works for both localhost and production)
     function getApiBaseUrl() {
         // If opened via file:// protocol, default to localhost
         if (window.location.protocol === 'file:') {
@@ -79,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // ====== Функция загрузки всех тренировок ======
     async function loadWorkouts() {
         if (!workoutsList) return;
 
@@ -132,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         if (!result) return; // User was redirected to login
                         
-                        loadWorkouts(); // обновляем список
+                        loadWorkouts(); 
                     } catch (err) {
                         console.error('Ошибка удаления тренировки:', err);
                         alert('Ошибка при удалении тренировки: ' + err.message);
@@ -149,7 +145,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // ====== Добавление новой тренировки ======
     if (workoutForm) {
         workoutForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -198,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 workoutForm.reset();
                 workoutForm.classList.remove('was-validated');
-                loadWorkouts(); // обновляем список после добавления
+                loadWorkouts(); 
             } catch (err) {
                 console.error('Ошибка добавления тренировки:', err);
                 alert('Ошибка при добавлении тренировки: ' + err.message);
@@ -206,7 +201,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ====== Инициализация ======
     if (workoutsList) loadWorkouts();
 
 });

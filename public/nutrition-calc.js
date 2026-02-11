@@ -79,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // ====== Функция загрузки всех записей питания ======
     async function loadNutritionEntries() {
         if (!nutritionLog) return;
 
@@ -135,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         if (!result) return; // User was redirected to login
                         
-                        loadNutritionEntries(); // обновляем список
+                        loadNutritionEntries(); 
                     } catch (err) {
                         console.error('Ошибка удаления записи:', err);
                         alert('Ошибка при удалении записи: ' + err.message);
@@ -150,7 +149,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // ====== Добавление новой записи питания ======
     if (nutritionForm) {
         nutritionForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -204,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 nutritionForm.reset();
                 nutritionForm.classList.remove('was-validated');
-                loadNutritionEntries(); // обновляем список после добавления
+                loadNutritionEntries(); 
             } catch (err) {
                 console.error('Ошибка добавления записи:', err);
                 alert('Ошибка при добавлении записи: ' + err.message);
@@ -212,7 +210,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ====== Инициализация ======
     if (nutritionLog) loadNutritionEntries();
 
 });
