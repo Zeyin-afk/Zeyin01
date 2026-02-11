@@ -210,3 +210,4 @@ document.addEventListener('DOMContentLoaded', function() {
     if (workoutsList) loadWorkouts();
 
 });
+

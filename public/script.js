@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Workout operations are now handled in workouts-api.js which uses MongoDB via Express API
     
-    // 3. ЛОГИКА ПИТАНИЯ (Журнал)
+    // 3. ЛОГИКА ПИТАНИЯ (Журнал) — локальное хранение используется только
+    // для старого варианта, но оставляем код на случай, если он вам нужен.
     
     function loadNutrition() {
         if (!nutritionLog) return;
@@ -52,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Обработчик отправки формы питания
-    if (nutritionForm) {
+    // Обработчик отправки формы питания (локальный вариант, если нужен)
+    if (nutritionForm && !document.body.classList.contains('api-nutrition')) {
         loadNutrition(); 
 
         nutritionForm.addEventListener('submit', function(e) {
@@ -97,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Обработчик удаления приема пищи
+    // Обработчик удаления приема пищи (локальный вариант)
     if (nutritionLog) {
         nutritionLog.addEventListener('click', function(e) {
             if (e.target.classList.contains('delete-btn-meal')) {   
@@ -232,3 +233,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
