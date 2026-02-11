@@ -4,12 +4,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 
-// Import routes
 const workoutRoutes = require('./routes/workoutRoutes');
-const mealRoutes = require('./routes/mealRoutes'); 
+const mealRoutes = require('./routes/mealRoutes');
 const userRoutes = require('./routes/userRoutes');
-
-// Import middleware
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -20,20 +17,23 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 // Middleware
 app.use(cors({
-  origin: true, // Allow all origins
+  origin: true,
   credentials: true
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname)); // serve HTML/CSS/JS from project root
+
+// ✅ Serve static files from public folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Env checks
 if (!MONGO_URI) {
-  console.error('❌ MONGO_URI is not set. Please add it to your .env file.');
+  console.error('❌ MONGO_URI is not set.');
   process.exit(1);
 }
 if (!JWT_SECRET) {
-  console.error('❌ JWT_SECRET is not set. Please add it to your .env file.');
+  console.error('❌ JWT_SECRET is not set.');
   process.exit(1);
 }
 
@@ -46,23 +46,20 @@ mongoose
     process.exit(1);
   });
 
-// Root route - serve index.html
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
 // Status endpoint
-app.get('/status', (req, res) => res.json({ status: 'OK' }));
+app.get('/status', (req, res) => {
+  res.json({ status: 'OK' });
+});
 
 // API Routes
 app.use('/api/workouts', workoutRoutes);
-app.use('/api/meals', mealRoutes); 
+app.use('/api/meals', mealRoutes);
 app.use('/api/users', userRoutes);
 
-// Error handling middleware 
+// Error handler
 app.use(errorHandler);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
